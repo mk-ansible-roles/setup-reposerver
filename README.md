@@ -6,38 +6,44 @@ A brief description of the role goes here.
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+The server should have been registered against Red Hat Network and must have enough diskspace at /var/www/html. You can use
+
+ - mk-ansible-roles.subscribe-rhn
+ - mk-ansible-roles.disk-init
+
+to configure your systems accordingly
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+If you want to serve the packages on special IP address you can specify *reposync_server*. It defaults to *ansible_hostname* if not set otherwise
 
-Both Optional
+The reposync parameters default to *-n -d -l --downloadcomps --download-metadata*, which download the group definitions and only keep the latest version of a package. Use *reposync_param* if you want to change these parameters.
 
-  reposync_server -> defaults to ansible_hostname
-  reposync_param -> defaults to keep only the latest version of a package
+As a default the cron script is copied to /usr/sbin. If reposync_cron is set to monthly or daily an appropriate link is set
 
-Dependencies
-------------
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+    reposync_server: "{{ ansible_hostname }}"
+    reposync_param: -n -d -l --downloadcomps --download-metadata
+    reposync_cron: [false|daily|monthly]
 
 Example Playbook
 ----------------
 
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - hosts: servers
+    - hosts: reposerver
       roles:
-         - { role: username.rolename, x: 42 }
+         - { role: mk-ansible-roles.setup-reposerver }
 
 License
 -------
 
-Apache 2.0
+Apache License
+Version 2.0, January 2004
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Markus Koch
+
+Please leave comments in the github repo issue list
