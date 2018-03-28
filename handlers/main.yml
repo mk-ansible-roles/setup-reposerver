@@ -1,0 +1,10 @@
+---
+# handlers file for setup-reposerver
+
+- name: initial_reposync
+  shell: /etc/cron.daily/reposync.sh
+        
+- name: restart_httpd
+  service:
+          name: httpd
+          state: restarted

@@ -1,0 +1,35 @@
+---
+# tasks file for setup-reposerver
+
+# required packages
+- name: ensure Webserver is installed
+  package:
+          state: present
+          name: httpd
+
+- name: ensure repository directories exist
+  file:
+          path: {{ item }}
+          owner: root
+          group: root
+          mode: 0755
+          setype: httpd_sys_content_t
+          state: directory
+  with_items:
+          - /var/www/html/repofiles
+          - /var/www/html/repos
+
+- name: ensure Webserver is enabled & running
+  service:
+          name: httpd
+          state: started
+          enabled: yes
+
+- name: ensure Reposync Cron is installed
+  template:
+          src=syncrepo.j2
+          dest=/etc/cron.daily/syncrepo.sh
+          mode=0755
+  notify: initial_reposync
+
+    
