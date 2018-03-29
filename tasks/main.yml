@@ -2,10 +2,14 @@
 # tasks file for setup-reposerver
 
 # required packages
-- name: ensure Webserver is installed
+- name: ensure required packages are installed
   package:
           state: present
-          name: httpd
+          name: "{{ item }}"
+  with_items:
+          - httpd
+          - createrepo
+          - yum-utils
 
 - name: ensure repository directories exist
   file:

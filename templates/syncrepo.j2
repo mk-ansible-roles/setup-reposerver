@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SERVERIP={{ reposync_server | default(inventory_hostname) }} 
+SERVERIP={{ reposync_server | default(ansible_hostname) }} 
 
 cd /var/www/html/repos
 
