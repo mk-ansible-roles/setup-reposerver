@@ -27,14 +27,14 @@
 
 - name: ensure syncrepo script  is installed
   template:
-          src=syncrepo.j2
-          dest=/usr/sbin/syncrepo.sh
-          mode=0755
+          src: syncrepo.j2
+          dest: /usr/sbin/syncrepo.sh
+          mode: 0755
   notify: initial_reposync
 
 - name: ensure Reposync Cron is installed
   file:
-          src=/usr/sbin/syncrepo.sh
-          dest=/etc/cron.{{ reposync_cron }}/syncrepo.sh
+          src: /usr/sbin/syncrepo.sh
+          dest: /etc/cron.{{ reposync_cron }}/syncrepo.sh
           state: link
   when: (reposync_cron == 'daily' ) or ( reposync_cron == 'monthly' )
