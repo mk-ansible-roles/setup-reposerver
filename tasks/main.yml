@@ -29,6 +29,15 @@
           state: started
           enabled: yes
 
+- name: ensure firewalld ports for http and https are open
+  firewalld:
+    service: "{{ item }}"
+    permanent: true
+    state: enabled
+  with_items:
+          - http
+          - https
+          
 - name: ensure syncrepo script  is installed
   template:
           src: syncrepo.j2
@@ -42,3 +51,5 @@
           dest: /etc/cron.{{ reposync_cron }}/syncrepo.sh
           state: link
   when: ( reposync_cron is defined ) and ((reposync_cron == 'daily' ) or ( reposync_cron == 'monthly' ))
+
+
