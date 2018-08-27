@@ -51,5 +51,3 @@
           dest: /etc/cron.{{ reposync_cron }}/syncrepo.sh
           state: link
   when: ( reposync_cron is defined ) and ((reposync_cron == 'daily' ) or ( reposync_cron == 'monthly' ))
-
-
