@@ -3,6 +3,9 @@
 
   vars:
           ansible_connection: local
+          #reposync_server: "{{ ansible_hostname }}"
+          #reposync_param: -n -d -l --downloadcomps --download-metadata 
+          #reposync_cron: [false|monthly|daily]
 
   roles:
           - { role: mk-ansible-roles.setup-reposerver }
