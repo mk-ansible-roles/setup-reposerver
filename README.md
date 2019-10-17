@@ -13,6 +13,10 @@ The server should have been registered against Red Hat Network and must have eno
 
 to configure your systems accordingly
 
+The following python modules need to be installed:
+  
+ - python-firewall
+
 Role Variables
 --------------
 

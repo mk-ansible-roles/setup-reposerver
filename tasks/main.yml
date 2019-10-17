@@ -5,11 +5,11 @@
 - name: ensure required packages are installed
   package:
           state: present
-          name: "{{ item }}"
-  with_items:
-          - httpd
-          - createrepo
-          - yum-utils
+          name: 
+             - httpd
+             - createrepo
+             - yum-utils
+             - python-firewall
 
 - name: ensure repository directories exist
   file:
@@ -29,6 +29,9 @@
           state: started
           enabled: yes
 
+- name: populate service facts
+  service_facts:
+
 - name: ensure firewalld ports for http and https are open
   firewalld:
     service: "{{ item }}"
@@ -38,6 +41,7 @@
   with_items:
           - http
           - https
+  when: ansible_facts.services["firewalld.service"] is defined
           
 - name: ensure syncrepo script  is installed
   template:

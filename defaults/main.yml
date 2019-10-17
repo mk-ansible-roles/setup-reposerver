@@ -1,2 +1,6 @@
 ---
 # defaults file for setup-reposerver
+#reposync_server: "{{ ansible_hostname }}"
+#reposync_param: -n -d -l --downloadcomps --download-metadata
+#reposync_cron: [false|daily|monthly]
+
